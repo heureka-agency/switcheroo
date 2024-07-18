@@ -30,7 +30,7 @@
             aria-haspopup="true"
             id="switcheroo-button"
     >
-        <span class="sr-only">View currencies</span>
+        <span class="sr-only">{{ trans('switcheroo::translations.view_currencies') }}</span>
         <span class="text-md mr-1" x-text="flag"></span>
         <span class="text-md" x-text="selected"></span>
     </button>

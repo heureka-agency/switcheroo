@@ -1,2 +1,4 @@
 <?php
-return [];
+return [
+    'view_currencies' => 'View Currencies'
+];
