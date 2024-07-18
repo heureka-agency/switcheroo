@@ -6,7 +6,6 @@ namespace HeurekaAgency\Switcheroo\Livewire;
 use HeurekaAgency\Switcheroo\Enums\Currency;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
-use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
 class CurrencySwitcher extends Component
@@ -21,9 +20,7 @@ class CurrencySwitcher extends Component
         $this->currencies = config('switcheroo.enabled_currencies');
 
         // Set the default currency if not set yet.
-        $this->selectedCurrency = !$this->selectedCurrency ?
-            config('switcheroo.default_currency') :
-            $this->selectedCurrency;
+        $this->selectedCurrency = config('switcheroo.default_currency');
     }
 
     public function render(): View
@@ -36,5 +33,10 @@ class CurrencySwitcher extends Component
     public function setSelectedCurrency(string $currency): void
     {
         $this->selectedCurrency = Currency::from($currency);
+    }
+
+    public function getCurrencyFlag($currencyCode): string
+    {
+        return Currency::from($currencyCode)->flag();
     }
 }
