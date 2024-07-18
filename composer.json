@@ -3,7 +3,13 @@
     "description": "TALL-stack currency switcher for LiveWire.",
     "keywords": [
         "heureka-agency",
-        "switcheroo"
+        "switcheroo",
+        "livewire",
+        "currency",
+        "alpine",
+        "alpinejs",
+        "tailwind",
+        "tall stack"
     ],
     "homepage": "https://github.com/heureka-agency/switcheroo",
     "license": "MIT",
