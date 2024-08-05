@@ -4,12 +4,16 @@ namespace HeurekaAgency\Switcheroo\Livewire;
 
 
 use HeurekaAgency\Switcheroo\Enums\Currency;
+use HeurekaAgency\Switcheroo\Events\CurrencySwitched;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CurrencySwitcher extends Component
 {
+    public bool $broadcastEvents = false;
+    public bool $broadcastOnPrivateChannel = false;
+
     public array $currencies = [];
 
     public ?Currency $selectedCurrency = null;
@@ -32,7 +36,13 @@ class CurrencySwitcher extends Component
     #[On('currency-selected')]
     public function setSelectedCurrency(string $currency): void
     {
-        $this->selectedCurrency = Currency::from($currency);
+        $currency = Currency::from($currency);
+        $this->selectedCurrency = $currency;
+        CurrencySwitched::dispatch(
+            $currency,
+            $this->broadcastEvents,
+            $this->broadcastOnPrivateChannel
+        );
     }
 
     public function getCurrencyFlag($currencyCode): string

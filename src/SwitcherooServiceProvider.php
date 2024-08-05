@@ -13,6 +13,7 @@ class SwitcherooServiceProvider extends PackageServiceProvider
     {
         $package->name('switcheroo')
             ->hasConfigFile()
+            ->hasRoute('channels')
             ->hasAssets()
             ->hasViews()
             ->hasTranslations();
