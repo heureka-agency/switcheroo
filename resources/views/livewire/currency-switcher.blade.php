@@ -3,19 +3,23 @@
     x-data="{
         open: false,
         selected: $persist(@js($selectedCurrency->value)).as('selected-currency'),
-        flag: @js($selectedCurrency->flag()),
+        flag: '',
+        async init() {
+            this.flag = await this.getFlag(@js($selectedCurrency->value));
+            if (this.selected !== @js($selectedCurrency->value)) {
+                await this.select(this.selected);
+            }
+        },
+        async getFlag(currency) {
+            return await $wire.getCurrencyFlag(currency);
+        },
         toggle() {
             this.open = !this.open;
         },
-        select(currency, flag) {
+        async select(currency) {
             this.selected = currency;
-            this.flag = flag;
+            this.flag = await this.getFlag(currency);
             $wire.dispatch('currency-selected', { currency: currency });
-        },
-        init() {
-            if (this.selected !== @js($selectedCurrency->value)) {
-                this.select(this.selected, $wire.getCurrencyFlag(this.selected));
-            }
         }
     }"
     @click.outside="open = false"
@@ -31,7 +35,7 @@
             id="switcheroo-button"
     >
         <span class="sr-only">{{ trans('switcheroo::translations.view_currencies') }}</span>
-        <span class="text-md mr-1" x-text="flag"></span>
+        <span class="text-md mr-1 w-4 h-4 fi" :class="'fi-' + flag"></span>
         <span class="text-md" x-text="selected"></span>
     </button>
 
@@ -56,9 +60,9 @@
                     <li>
                         <button type="button"
                                 class="btn px-3 py-2 w-full text-left hover:bg-gray-100 flex items-center rounded-md"
-                                @click.prevent="select(@js($currency->value), @js($currency->flag())); toggle()"
+                                @click.prevent="await select(@js($currency->value)); toggle()"
                         >
-                            <span class="text-md mr-1">{{ $currency->flag() }}</span>
+                            <span class="text-md mr-1 w-4 h-4 fi fi-{{ $currency->flag() }}"></span>
                             <span class="text-md">{{ $currency->value }}</span>
                         </button>
                     </li>

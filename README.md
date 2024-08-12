@@ -17,6 +17,12 @@ You can install the package via composer:
 composer require heureka-agency/switcheroo
 ```
 
+You will also need to install the `flag-icons` npm package to display currency flags:
+
+```bash
+npm install flag-icons
+```
+
 ## Usage
 
 ### Config
@@ -45,6 +51,11 @@ return [
 ```
 
 ### Including in your app
+
+Make sure to import the Switcheroo CSS in your app.css:
+```css
+@import "../../vendor/heureka-agency/switcheroo/resources/css/switcheroo.css";
+```
 
 Then simply include the Switcheroo component wherever you'd like:
 
